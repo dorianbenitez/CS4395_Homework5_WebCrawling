@@ -13,28 +13,56 @@ if __name__ == '__main__':
     # 1.    Build  a web crawler function that starts with a URL representing a topic
     # (a sport, your favorite film, a celebrity, a political issue, etc.) and outputs a list of at least 15 relevant URLs.
     # The URLs can be pages within the original domain but should have a few outside the original domain
-
-    # 2.    Write a function to loop through your URLs and scrape all text off each page.
-    #       Store each page’s text in its own file
     starter_url = "https://www.wsj.com/news/markets?mod=nav_top_section"
 
     r = requests.get(starter_url)
 
     data = r.text
     soup = BeautifulSoup(data, "html.parser")
+    url_array = []
 
     counter = 0
     # write urls to a file
-    with open('urls.txt', 'w') as f:
-        for link in soup.find_all('a'):
-            print(link.get('href'))
-            f.write(str(link.get('href')) + '\n\n')
-            if counter > 20:
-                break
-            counter += 1
+    # with open('urls.txt', 'w') as f:
+    for link in soup.find_all('a'):
+        print(link.get('href'))
+        url_array.append((str(link.get('href'))))
+        if counter > 15:
+            break
+        counter += 1
 
-    # end of program
+
     print("end of crawler")
+
+
+    # 2.    Write a function to loop through your URLs and scrape all text off each page.
+    #       Store each page’s text in its own file
+    my_url = "https://www.makaan.com/"
+
+
+    # function to determine if an element is visible
+    def visible(element):
+        if element.parent.name in ['style', 'script', '[document]', 'head', 'title']:
+            return False
+        elif re.match('<!--.*-->', str(element.encode('utf-8'))):
+            return False
+        return True
+
+
+    # with open('urls.txt', 'r') as f:
+    # url_text = []
+    # html = urllib.request.urlopen(my_url)
+    # soup = BeautifulSoup(html, "html.parser")
+    # data = soup.findAll(text=True)
+    # result = filter(visible, data)
+    # temp_list = list(result)  # list from filter
+    # temp_str = ' '.join(temp_list)
+    # url_text.append(temp_str)
+    # print(url_text[0])
+
+
+
+
 
     # 3.    Write a function to clean up the text. You might need to delete newlines and tabs.
     # Extract sentences with NLTK’s sentence tokenizer.
