@@ -4,22 +4,24 @@ import requests
 from bs4 import BeautifulSoup
 from nltk.tokenize import sent_tokenize
 from urllib import request
+import urllib.request
+# import re
 
 
 # Main function
-if name == 'main':
+if __name__ == '__main__':
     # 1.    Build  a web crawler function that starts with a URL representing a topic
     # (a sport, your favorite film, a celebrity, a political issue, etc.) and outputs a list of at least 15 relevant URLs.
     # The URLs can be pages within the original domain but should have a few outside the original domain
 
     # 2.    Write a function to loop through your URLs and scrape all text off each page.
-    # Store each page’s text in its own file
+    #       Store each page’s text in its own file
     starter_url = "https://www.wsj.com/news/markets?mod=nav_top_section"
 
     r = requests.get(starter_url)
 
     data = r.text
-    soup = BeautifulSoup(data)
+    soup = BeautifulSoup(data, "html.parser")
 
     counter = 0
     # write urls to a file
