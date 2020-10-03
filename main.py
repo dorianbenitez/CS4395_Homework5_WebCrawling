@@ -5,7 +5,14 @@ from bs4 import BeautifulSoup
 from nltk.tokenize import sent_tokenize
 from urllib import request
 import urllib.request
-# import re
+
+# function to determine if an element is visible
+def visible(element):
+    if element.parent.name in ['style', 'script', '[document]', 'head', 'title']:
+        return False
+    elif re.match('<!--.*-->', str(element.encode('utf-8'))):
+        return False
+    return True
 
 
 # Main function
@@ -13,52 +20,50 @@ if __name__ == '__main__':
     # 1.    Build  a web crawler function that starts with a URL representing a topic
     # (a sport, your favorite film, a celebrity, a political issue, etc.) and outputs a list of at least 15 relevant URLs.
     # The URLs can be pages within the original domain but should have a few outside the original domain
-    starter_url = "https://www.wsj.com/news/markets?mod=nav_top_section"
-
+    starter_url = "https://www.wsj.com/news"
     r = requests.get(starter_url)
-
     data = r.text
     soup = BeautifulSoup(data, "html.parser")
-    url_array = []
+    url_list = []
 
     counter = 0
-    # write urls to a file
-    # with open('urls.txt', 'w') as f:
+
+    # Print all the links and append each to a list
     for link in soup.find_all('a'):
-        print(link.get('href'))
-        url_array.append((str(link.get('href'))))
-        if counter > 15:
+        if "login" not in link.get('href') and "getnewsmart" not in link.get('href') and "centralbanking" not in link.get('href'):
+            url_list.append((str(link.get('href'))))
+            print(str(counter) + " " + link.get('href'))
+        if counter > 40:
             break
         counter += 1
-
 
     print("end of crawler")
 
 
     # 2.    Write a function to loop through your URLs and scrape all text off each page.
     #       Store each page’s text in its own file
-    my_url = "https://www.makaan.com/"
 
 
-    # function to determine if an element is visible
-    def visible(element):
-        if element.parent.name in ['style', 'script', '[document]', 'head', 'title']:
-            return False
-        elif re.match('<!--.*-->', str(element.encode('utf-8'))):
-            return False
-        return True
+    url_text = []
+    count = 0
 
-
-    # with open('urls.txt', 'r') as f:
-    # url_text = []
-    # html = urllib.request.urlopen(my_url)
-    # soup = BeautifulSoup(html, "html.parser")
-    # data = soup.findAll(text=True)
-    # result = filter(visible, data)
-    # temp_list = list(result)  # list from filter
-    # temp_str = ' '.join(temp_list)
-    # url_text.append(temp_str)
-    # print(url_text[0])
+    for i in range(len(url_list)):
+        # print(url_list[i])
+        try:
+            html = urllib.request.urlopen(url_list[i])
+        except:
+            pass
+        soup = BeautifulSoup(html, "html.parser")
+        data = soup.findAll(text=True)
+        result = filter(visible, data)
+        temp_list = list(result)  # list from filter
+        temp_str = ' '.join(temp_list)
+        if len(temp_str) > 1500 and count < 15 and "javascript" not in temp_str.lower() and "unsupported browser" not in temp_str.lower():
+            count += 1
+            with open(str(count) + ".txt", 'w') as f:
+                f.write(str(temp_str.encode("utf-8")))
+        if count == 15:
+            break
 
 
 
