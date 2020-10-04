@@ -77,7 +77,7 @@ if __name__ == '__main__':
                     f.write(str(sent_tokens[t].encode("utf-8")) + '\n')
 
 
-    count = 16
+    count = 16 # this is temporary, delete after uncommenting part 2
 
     # 4.    Write a function to extract at least 25 important terms from the pages using an importance measure such as
     # term frequency, or tf-idf. First, it’s a good idea to lower-case everything, remove stopwords and punctuation.
