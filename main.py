@@ -1,3 +1,4 @@
+import pickle
 import sys
 import re
 import requests
@@ -7,6 +8,7 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from urllib import request
 import urllib.request
 import nltk
+
 
 # function to determine if an element is visible
 def visible(element):
@@ -32,13 +34,13 @@ if __name__ == '__main__':
 
     # Print all the URLs and append each to a list
     for link in soup.find_all('a'):
-        if "login" not in link.get('href') and "getnewsmart" not in link.get('href') and "centralbanking" not in link.get('href') and len(link.get('href')) > 5:
+        if "login" not in link.get('href') and "getnewsmart" not in link.get(
+                'href') and "centralbanking" not in link.get('href') and len(link.get('href')) > 5:
             url_list.append((str(link.get('href'))))
             print("\t" + str(counter + 1) + ". " + link.get('href'))
             counter += 1
         if counter > 39:
             break
-
 
     # 2.    Write a function to loop through your URLs and scrape all text off each page.
     #       Store each page’s text in its own file
@@ -67,7 +69,7 @@ if __name__ == '__main__':
     # Write the sentences for each file to a new file. That is, if you have 15 files in, you have 15 files out.
     for i in range(1, 16):
         with open(str(i) + ".txt", 'r') as f:
-            raw = f.read().replace('\\n', '').replace('\\t', ''). replace('\\r', '')
+            raw = f.read().replace('\\n', '').replace('\\t', '').replace('\\r', '')
         count += 1
 
         sent_tokens = nltk.sent_tokenize(raw)
@@ -76,8 +78,7 @@ if __name__ == '__main__':
                 if '\\' not in sent_tokens[t]:
                     f.write(str(sent_tokens[t].encode("utf-8")) + '\n')
 
-
-    count = 16 # this is temporary, delete after uncommenting part 2
+    count = 16  # this is temporary, delete after uncommenting part 2
 
     # 4.    Write a function to extract at least 25 important terms from the pages using an importance measure such as
     # term frequency, or tf-idf. First, it’s a good idea to lower-case everything, remove stopwords and punctuation.
@@ -103,9 +104,9 @@ if __name__ == '__main__':
 
     sort_orders = sorted(tf_dict.items(), key=lambda x: x[1], reverse=True)
     print("\nMost important words: ")
-    for i in range(0,40):
+    for i in range(0, 40):
         if next(iter(sort_orders[i])) != "b":
-            print("\t" + str(i+1) + ". " + next(iter(sort_orders[i])))
+            print("\t" + str(i + 1) + ". " + next(iter(sort_orders[i])))
 
     # 5.    Manually determine the top 10 terms from step 4, based on your domain knowledge.
     dk_10_list = ["home", "buy", "sell", "rates", "marketplace", "new", "insights", "property", "area", "information"]
@@ -113,7 +114,52 @@ if __name__ == '__main__':
     # 6. Build a searchable knowledge base of facts that a chatbot (to be developed later) can share related to the 10 terms.
     # The “knowledge base” can be as simple as a Python dict which you can pickle.
     # More points for something more sophisticated like sql.
-    text = "Hello my name is ChatBot, how are you? What area are you interested in buying? "
+    knowledge_base = "Hello my name is ChatBot, what is your name?\n" \
+                     "What insights and information are you looking for today?\n" \
+                     "Are you looking for a home to buy, sell, or rent?\n" \
+                     "What area of the country are you most interested in?\n" \
+                     "Are you looking for a new home?\n" \
+                     "The market rate in that area seems to be decreasing.\n" \
+                     "The market rate in that area seems to be increasing.\n" \
+                     "The marketplace is currently trending upwards.\n" \
+                     "Hello, how can I help you?\n" \
+                     "Are you a senior citizen?\n" \
+                     "Here are some locations that are local.\n" \
+                     "Would you like more information about the public schools in that area?\n" \
+                     "What area are you looking to do business in?\n" \
+                     "Last year Frisco had over 200,000 new residents.\n" \
+                     "Texas has no state tax.\n" \
+                     "A large amount of people are relocating from California to Texas within the past couple of years.\n" \
+                     "To enhance your search, would you like to list any necessary information?\n" \
+                     "What other information from the marketplace would you like to know?\n" \
+                     "The tax rate in that area is high compared to the national average.\n" \
+                     "Are you retiring within the next 5 years?\n" \
+                     "Do you have a IRA or 401k setup?\n" \
+                     "Are you relying on any Government assistance for your annual income?\n" \
+                     "Are you interested in the stock market?\n" \
+                     "What is your price range?\n" \
+                     "Do you prefer a warm or colder climate?\n" \
+                     "Would you like to live near downtown?\n" \
+                     "How far would you like to commute to work?\n" \
+                     "Would you like to make an immediate offer?\n" \
+                     "Will you reside in the residence, or use it for business purposes?\n" \
+                     "Would you to live in a home, apartment, or condominium?\n" \
+                     "What is your age group?\n" \
+                     "Would you like to know the crime rate in that area?\n" \
+                     "Thanks for using ChatBot, have a nice day!\n"
+    kb_sents = sent_tokenize(knowledge_base)
+
+    with open("KnowledgeBase.txt", 'w') as f:
+        for i in range(len(kb_sents)):
+            f.write(kb_sents[i] + '\n')
+
+    dict_counter = 1
+
+    kb_dict = {}
+    for sentence in kb_sents:
+        kb_dict.update({sentence: dict_counter})
+        dict_counter += 1
+    pickle.dump(kb_dict, open("KnowledgeBasePickle", 'wb'))
 
     # 7.    In a doc: (1) describe how you created your knowledge base,
     # include screen shots of the knowledge base, and indicate your top 10 terms;
