@@ -28,17 +28,16 @@ if __name__ == '__main__':
     url_list = []
 
     counter = 0
+    print("\nRelevant URLs: ")
 
     # Print all the URLs and append each to a list
     for link in soup.find_all('a'):
         if "login" not in link.get('href') and "getnewsmart" not in link.get('href') and "centralbanking" not in link.get('href') and len(link.get('href')) > 5:
             url_list.append((str(link.get('href'))))
-            print(str(counter) + " " + link.get('href'))
+            print("\t" + str(counter + 1) + ". " + link.get('href'))
             counter += 1
-        if counter > 40:
+        if counter > 39:
             break
-
-    print("end of crawler")
 
 
     # 2.    Write a function to loop through your URLs and scrape all text off each page.
@@ -102,9 +101,10 @@ if __name__ == '__main__':
         count += 1
 
     sort_orders = sorted(tf_dict.items(), key=lambda x: x[1], reverse=True)
+    print("\nMost important words: ")
     for i in range(0,30):
-        print(sort_orders[i])
-    # print(sort_orders[:30])
+        if next(iter(sort_orders[i])) != "b":
+            print("\t" + str(i+1) + ". " + next(iter(sort_orders[i])))
 
 
 
