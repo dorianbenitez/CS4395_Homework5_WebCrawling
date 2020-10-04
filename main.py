@@ -90,6 +90,7 @@ if __name__ == '__main__':
         tokens = word_tokenize(lower_raw)
         tokens = [w for w in tokens if w.isalpha()
                   and w not in stopwords.words('english')]
+
         for t in tokens:
             if t in tf_dict:
                 tf_dict[t] += 1
@@ -102,18 +103,17 @@ if __name__ == '__main__':
 
     sort_orders = sorted(tf_dict.items(), key=lambda x: x[1], reverse=True)
     print("\nMost important words: ")
-    for i in range(0,30):
+    for i in range(0,40):
         if next(iter(sort_orders[i])) != "b":
             print("\t" + str(i+1) + ". " + next(iter(sort_orders[i])))
 
-
-
-
     # 5.    Manually determine the top 10 terms from step 4, based on your domain knowledge.
+    dk_10_list = ["home", "buy", "sell", "rates", "marketplace", "new", "insights", "property", "area", "information"]
 
-    # 6.    Build a searchable knowledge base of facts that a chatbot (to be developed later) can share related to the 10 terms.
+    # 6. Build a searchable knowledge base of facts that a chatbot (to be developed later) can share related to the 10 terms.
     # The “knowledge base” can be as simple as a Python dict which you can pickle.
     # More points for something more sophisticated like sql.
+    text = "Hello my name is ChatBot, how are you? What area are you interested in buying? "
 
     # 7.    In a doc: (1) describe how you created your knowledge base,
     # include screen shots of the knowledge base, and indicate your top 10 terms;
