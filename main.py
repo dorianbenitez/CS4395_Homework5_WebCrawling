@@ -30,12 +30,12 @@ if __name__ == '__main__':
 
     # Print all the URLs and append each to a list
     for link in soup.find_all('a'):
-        if "login" not in link.get('href') and "getnewsmart" not in link.get('href') and "centralbanking" not in link.get('href'):
+        if "login" not in link.get('href') and "getnewsmart" not in link.get('href') and "centralbanking" not in link.get('href') and len(link.get('href')) > 5:
             url_list.append((str(link.get('href'))))
             print(str(counter) + " " + link.get('href'))
+            counter += 1
         if counter > 40:
             break
-        counter += 1
 
     print("end of crawler")
 
