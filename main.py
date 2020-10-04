@@ -18,9 +18,8 @@ def visible(element):
 
 # Main function
 if __name__ == '__main__':
-    # 1.    Build  a web crawler function that starts with a URL representing a topic
-    # (a sport, your favorite film, a celebrity, a political issue, etc.) and outputs a list of at least 15 relevant URLs.
-    # The URLs can be pages within the original domain but should have a few outside the original domain
+    # 1.    Build  a web crawler function that starts with a URL representing a topic and outputs a list of at least 15
+    # relevant URLs. The URLs can be pages within the original domain but should have a few outside the original domain
     starter_url = "https://www.wsj.com/news"
     r = requests.get(starter_url)
     data = r.text
@@ -29,7 +28,7 @@ if __name__ == '__main__':
 
     counter = 0
 
-    # Print all the links and append each to a list
+    # Print all the URLs and append each to a list
     for link in soup.find_all('a'):
         if "login" not in link.get('href') and "getnewsmart" not in link.get('href') and "centralbanking" not in link.get('href'):
             url_list.append((str(link.get('href'))))
@@ -43,8 +42,6 @@ if __name__ == '__main__':
 
     # 2.    Write a function to loop through your URLs and scrape all text off each page.
     #       Store each page’s text in its own file
-
-
     url_text = []
     count = 0
 
@@ -78,8 +75,6 @@ if __name__ == '__main__':
             for t in range(len(tokens)):
                 if '\\' not in tokens[t]:
                     f.write(str(tokens[t].encode("utf-8")) + '\n')
-
-
 
 
     # 4.    Write a function to extract at least 25 important terms from the pages using an importance measure such as
