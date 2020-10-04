@@ -2,7 +2,8 @@ import sys
 import re
 import requests
 from bs4 import BeautifulSoup
-from nltk.tokenize import sent_tokenize
+from nltk.corpus import stopwords
+from nltk.tokenize import sent_tokenize, word_tokenize
 from urllib import request
 import urllib.request
 import nltk
@@ -45,22 +46,22 @@ if __name__ == '__main__':
     url_text = []
     count = 0
 
-    for i in range(len(url_list)):
-        try:
-            html = urllib.request.urlopen(url_list[i])
-        except:
-            pass
-        soup = BeautifulSoup(html, "html.parser")
-        data = soup.findAll(text=True)
-        result = filter(visible, data)
-        temp_list = list(result)  # list from filter
-        temp_str = ' '.join(temp_list)
-        if len(temp_str) > 1500 and count < 15 and "javascript" not in temp_str.lower() and "unsupported browser" not in temp_str.lower():
-            count += 1
-            with open(str(count) + ".txt", 'w') as f:
-                f.write(str(temp_str.encode("utf-8")))
-        if count == 15:
-            break
+    # for i in range(len(url_list)):
+    #     try:
+    #         html = urllib.request.urlopen(url_list[i])
+    #     except:
+    #         pass
+    #     soup = BeautifulSoup(html, "html.parser")
+    #     data = soup.findAll(text=True)
+    #     result = filter(visible, data)
+    #     temp_list = list(result)  # list from filter
+    #     temp_str = ' '.join(temp_list)
+    #     if len(temp_str) > 1500 and count < 15 and "javascript" not in temp_str.lower() and "unsupported browser" not in temp_str.lower():
+    #         count += 1
+    #         with open(str(count) + ".txt", 'w') as f:
+    #             f.write(str(temp_str.encode("utf-8")))
+    #     if count == 15:
+    #         break
 
     # 3.    Write a function to clean up the text. You might need to delete newlines and tabs.
     # Extract sentences with NLTK’s sentence tokenizer.
@@ -70,16 +71,42 @@ if __name__ == '__main__':
             raw = f.read().replace('\\n', '').replace('\\t', ''). replace('\\r', '')
         count += 1
 
-        tokens = nltk.sent_tokenize(raw)
+        sent_tokens = nltk.sent_tokenize(raw)
         with open(str(count) + ".txt", 'w') as f:
-            for t in range(len(tokens)):
-                if '\\' not in tokens[t]:
-                    f.write(str(tokens[t].encode("utf-8")) + '\n')
+            for t in range(len(sent_tokens)):
+                if '\\' not in sent_tokens[t]:
+                    f.write(str(sent_tokens[t].encode("utf-8")) + '\n')
 
+
+    count = 16
 
     # 4.    Write a function to extract at least 25 important terms from the pages using an importance measure such as
     # term frequency, or tf-idf. First, it’s a good idea to lower-case everything, remove stopwords and punctuation.
     # Print the top 25-40 terms.
+    tf_dict = {}
+
+    for i in range(16, 30):
+        with open(str(count) + ".txt", 'r') as f:
+            lower_raw = f.read().lower()
+        tokens = word_tokenize(lower_raw)
+        tokens = [w for w in tokens if w.isalpha()
+                  and w not in stopwords.words('english')]
+        for t in tokens:
+            if t in tf_dict:
+                tf_dict[t] += 1
+            else:
+                tf_dict[t] = 1
+
+        for t in tf_dict.keys():
+            tf_dict[t] = tf_dict[t] / len(tokens)
+        count += 1
+
+    sort_orders = sorted(tf_dict.items(), key=lambda x: x[1], reverse=True)
+    for i in range(0,30):
+        print(sort_orders[i])
+    # print(sort_orders[:30])
+
+
 
 
     # 5.    Manually determine the top 10 terms from step 4, based on your domain knowledge.
