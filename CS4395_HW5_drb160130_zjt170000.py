@@ -128,32 +128,32 @@ if __name__ == '__main__':
                      "The average mortgage interest rate in the United States is 3.21%.\n" \
                      "North Carolina is leading the United States in millennial population.\n" \
                      "The best day of the week to list your home for sale is on a Friday.\n" \
-                     "On average, 500 people move to Atlanta, Georgia every day\n" \
+                     "On average, 500 people move to Atlanta, Georgia every day.\n" \
                      "Dallas, Texas has the highest employment rate in the United States.\n" \
                      "The median sale price of a home is $328,419 in the United States.\n" \
-                     "In 2019, number of homes sold was 652,878 in the United States.\n" \
+                     "In 2019, the number of homes sold was 652,878 in the United States.\n" \
                      "In 2019, the number of American homes that went up for sale was 1,066,903.\n" \
                      "The number of American homes newly listed on the market is 691,785.\n" \
-                     "The number of homes sold above their original listing is 32%.\n" \
+                     "The number of homes sold above their original listing price is 32%.\n" \
                      "The three most competitive cities in the U.S. housing market are Tacoma, WA, Grand Rapids, MI, and Spokane, WA.\n" \
                      "The three fastest growing metropolitan cities in the U.S. housing market are Cleveland, OH, Memphis, TN, and Toms River, NJ.\n" \
-                     "A large amount of people are relocating from California to Texas within the past couple of years.\n" \
+                     "A large amount of people have relocated from California to Texas within the past couple of years.\n" \
                      "Houston, Texas is the fourth largest city in the United States by population.\n" \
                      "52.9% of Dallas, Texas residents are renters vs. the national average of 33%.\n" \
-                     "In 2017, investors owned/rented out about 18.2 million one-unit homes, including detached homes, town homes, and duplexes, providing housing for about 42 percent of the nation’s 43 million renter households.\n" \
-                     "Rental properties more often than not guarantee a steady rate on your investment.\n" \
-                     "The two most important benefits of owning rental properties is generating cash flow and value from appreciation.\n" \
+                     "In 2017, investors owned/rented out 18.2 million one-unit homes, including detached homes, town homes, and duplexes, providing housing for 42% of the nation’s renter households.\n" \
+                     "Rental properties often guarantee a steady rate of return on your investment.\n" \
+                     "The two most important benefits of owning rental properties is generating cash flow and earning value from appreciation.\n" \
                      "In 2019, there were about 14.7 million households and 45.2 million residents renting single-family homes in the United States.\n" \
                      "In 2013, NAR reported that the median age of first-time buyers was 31. On average these buyers purchased a 1,670 square-foot home costing $170,000.\n" \
                      "The nationwide nominal house price index is now 40% above its 2012 low-point and 4% above the peak reached in 2006.\n" \
-                     "The mountain region has the highest house price increases year after year.\n" \
+                     "The mountain region has the highest home price increases each year.\n" \
                      "Residential construction activity continues to rise strongly, partly driven by lower mortgages rates.\n" \
                      "According to a NAR Community Preference Survey, 78% of respondents said that the neighborhood is more important to them than the size of the home.\n" \
                      "The most affordable zip codes with the best schools in the U.S. are 64014, 46060, and 75023.\n" \
-                     "The worst time to buy a home is when inventory is running low, meaning that prices are high.\n" \
+                     "The worst time to buy a home is when inventory is running low, meaning that prices are running high.\n" \
                      "According to the U.S. Census Bureau, the average person will move 12 times within their lifetime.\n" \
                      "80% of people aged 65 and older own their own homes.\n" \
-                     "The number of people renting homes aged over 59, grew 43% in the last 10 years."
+                     "The number of people renting homes aged over 59 grew 43% in the last 10 years."
 
     # Extract the knowledge base sentences with NLTK’s sentence tokenizer.
     kb_sents = sent_tokenize(knowledge_base)
