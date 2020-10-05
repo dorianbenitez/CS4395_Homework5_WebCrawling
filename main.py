@@ -114,14 +114,14 @@ if __name__ == '__main__':
     # 6. Build a searchable knowledge base of facts that a chatbot (to be developed later) can share related to the 10 terms.
     # The “knowledge base” can be as simple as a Python dict which you can pickle.
     # More points for something more sophisticated like sql.
-    knowledge_base = "Hello my name is ChatBot, what is your name?\n" \
-                     "What insights and information are you looking for today?\n" \
-                     "Are you looking for a home to buy, sell, or rent?\n" \
-                     "What area of the country are you most interested in?\n" \
-                     "Are you looking for a new home?\n" \
-                     "The market rate in that area seems to be decreasing.\n" \
-                     "The market rate in that area seems to be increasing.\n" \
-                     "The marketplace is currently trending upwards.\n" \
+    knowledge_base = "Hello my name is ChatBot." \
+                     "A homeowner’s net worth is over thirty times greater than that of a renter.\n" \
+                     "61.4% of the average American family’s net worth is in home equity.\n" \
+                     "The average mortgage interest rate in the United States is 3.21%.\n" \
+                     "North Carolina tops the United States in millennial Population" \
+                     "The best day of the week to list your home for sale is Friday." \
+                     "On average, 500 people move to Atlanta, Georgia a day" \
+                     "Dallas, Texas is the leader of employment in the United States." \
                      "Hello, how can I help you?\n" \
                      "Are you a senior citizen?\n" \
                      "Here are some locations that are local.\n" \
