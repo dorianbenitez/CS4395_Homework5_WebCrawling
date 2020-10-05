@@ -114,44 +114,43 @@ if __name__ == '__main__':
     # 6. Build a searchable knowledge base of facts that a chatbot (to be developed later) can share related to the 10 terms.
     # The “knowledge base” can be as simple as a Python dict which you can pickle.
     # More points for something more sophisticated like sql.
-    knowledge_base = "Hello my name is ChatBot." \
-                     "A homeowner’s net worth is over thirty times greater than that of a renter.\n" \
-                     "61.4% of the average American family’s net worth is in home equity.\n" \
+    knowledge_base = "Hello, my name is ChatBot.\n" \
+                     "A homeowners net worth is over thirty times greater than that of a renter.\n" \
+                     "61.4% of the average American familys net worth is in home equity.\n" \
                      "The average mortgage interest rate in the United States is 3.21%.\n" \
-                     "North Carolina tops the United States in millennial Population" \
-                     "The best day of the week to list your home for sale is Friday." \
-                     "On average, 500 people move to Atlanta, Georgia a day" \
-                     "Dallas, Texas is the leader of employment in the United States." \
-                     "Hello, how can I help you?\n" \
-                     "Are you a senior citizen?\n" \
-                     "Here are some locations that are local.\n" \
-                     "Would you like more information about the public schools in that area?\n" \
-                     "What area are you looking to do business in?\n" \
-                     "Last year Frisco had over 200,000 new residents.\n" \
-                     "Texas has no state tax.\n" \
+                     "North Carolina is leading the United States in millennial population.\n" \
+                     "The best day of the week to list your home for sale is on a Friday.\n" \
+                     "On average, 500 people move to Atlanta, Georgia every day\n" \
+                     "Dallas, Texas has the highest employment rate in the United States.\n" \
+                     "The median sale price of a home is $328,419 in the United States.\n" \
+                     "In 2019, number of homes sold was 652,878 in the United States.\n" \
+                     "In 2019, the number of American homes that went up for sale was 1,066,903.\n" \
+                     "The number of American homes newly listed on the market is 691,785.\n" \
+                     "The number of homes sold above their original listing is 32%.\n" \
+                     "The three most competetive cities in the U.S. housing market are Tacoma, WA, Grand Rapids, MI, and Spokane, WA.\n" \
+                     "The three fastest growing metropolitan cities in the U.S. housing market are Cleveland, OH, Memphis, TN, and Toms River, NJ.\n" \
                      "A large amount of people are relocating from California to Texas within the past couple of years.\n" \
-                     "To enhance your search, would you like to list any necessary information?\n" \
-                     "What other information from the marketplace would you like to know?\n" \
-                     "The tax rate in that area is high compared to the national average.\n" \
-                     "Are you retiring within the next 5 years?\n" \
-                     "Do you have a IRA or 401k setup?\n" \
-                     "Are you relying on any Government assistance for your annual income?\n" \
-                     "Are you interested in the stock market?\n" \
-                     "What is your price range?\n" \
-                     "Do you prefer a warm or colder climate?\n" \
-                     "Would you like to live near downtown?\n" \
-                     "How far would you like to commute to work?\n" \
-                     "Would you like to make an immediate offer?\n" \
-                     "Will you reside in the residence, or use it for business purposes?\n" \
-                     "Would you to live in a home, apartment, or condominium?\n" \
-                     "What is your age group?\n" \
-                     "Would you like to know the crime rate in that area?\n" \
-                     "Thanks for using ChatBot, have a nice day!\n"
+                     "Houston, Texas is the fourth largest city in the United States by population.\n" \
+                     "52.9% of Dallas, Texas residents are renters vs. the national average of 33%.\n" \
+                     "In 2017, investors owned/rented out about 18.2 million one-unit homes, including detached homes, townhomes, and duplexes, providing housing for about 42 percent of the nation’s 43 million renter households.\n" \
+                     "Rental properties more often than not guarantee a steady rate on your investment.\n" \
+                     "The two most important benefits of owning rental properties is generating cash flow and value from appreciation.\n" \
+                     "In 2019, there were about 14.7 million households and 45.2 million residents renting single-family homes in the United States.\n" \
+                     "In 2013, NAR reported that the median age of first-time buyers was 31. On average these buyers purchased a 1,670 square-foot home costing $170,000.\n" \
+                     "The nationwide nominal house price index is now 40% above its 2012 low-point and 4% above the peak reached in 2006.\n" \
+                     "The mountain region has the highest house price increases year after year.\n" \
+                     "Residential construction activity continues to rise strongly, partly driven by lower mortgages rates.\n" \
+                     "According to a NAR Community Preference Survey, 78% of respondents said that the neighborhood is more important to them than the size of the home.\n" \
+                     "The most affordable zip codes with the best schools in the U.S. are 64014, 46060, and 75023.\n" \
+                     "The worst time to buy a home is when inventory is running low, meaning that prices are high.\n" \
+                     "According to the U.S. Census Bureau, the average person will move 12 times within their lifetime.\n" \
+                     "80% of people aged 65 and older own their own homes.\n" \
+                     "The number of people renting homes aged over 59, grew 43% in the last 10 years."
     kb_sents = sent_tokenize(knowledge_base)
 
-    with open("KnowledgeBase.txt", 'w') as f:
+    with open('KnowledgeBase.txt', 'w') as f:
         for i in range(len(kb_sents)):
-            f.write(kb_sents[i] + '\n')
+            f.write(str(kb_sents[i]) + '\n')
 
     dict_counter = 1
 
