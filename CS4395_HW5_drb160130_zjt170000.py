@@ -1,3 +1,11 @@
+#######
+# File: CS4395_HW5_drb160130_zjt170000.py
+# Author 1: Dorian Benitez (drb160130)
+# Author 2: Zachary Tarell (zjt170000)
+# Date: 10/4/2020
+# Purpose: CS 4395.001 - Homework #5 (Web Scraping - Web Crawler)
+#######
+
 import pickle
 import re
 import requests
@@ -21,7 +29,7 @@ def visible(element):
 # Main function
 if __name__ == '__main__':
 
-    # Build  a web crawler function that starts with a URL representing a topic and outputs a list of at least 15 relevant URLs.
+    # Build a web crawler function that starts with a URL representing a topic and outputs a list of 40 relevant URLs.
     starter_url = "https://www.wsj.com/news"
     r = requests.get(starter_url)
     data = r.text
@@ -29,9 +37,10 @@ if __name__ == '__main__':
     url_list = []
     count = 0
 
+    print("\nStarter URL: " + starter_url)
     print("\nRelevant URLs: ")
 
-    # Print all the relevant URLs and append each one to a list
+    # Print top 40 relevant URLs and append each one to a list
     for link in soup.find_all('a'):
         if "login" not in link.get('href') and "getnewsmart" not in link.get('href') and "centralbanking" not in link.get('href') and len(link.get('href')) > 5:
             url_list.append((str(link.get('href'))))
@@ -41,7 +50,7 @@ if __name__ == '__main__':
             break
     count = 0
 
-    # Write a function to loop through your URLs and scrape all text off each page.
+    # Write a function to loop through the URLs and scrape all text off each page.
     # Store each page’s text in its own file, up to 15 files.
     for i in range(len(url_list)):
         try:
@@ -54,10 +63,10 @@ if __name__ == '__main__':
         temp_list = list(result)
         temp_str = ' '.join(temp_list)
 
-        # Only write the URLs with the best text to a new file
+        # Only write the top 15 URLs with the best scraped text to a new file
         if len(temp_str) > 1500 and count < 15 and "javascript" not in temp_str.lower() and "unsupported browser" not in temp_str.lower():
             count += 1
-            with open("raw" + str(count) + ".txt", 'w') as f:
+            with open("raw_" + str(count) + ".txt", 'w') as f:
                 f.write(str(temp_str.encode("utf-8")))
 
         if count == 15:
@@ -65,27 +74,26 @@ if __name__ == '__main__':
 
     # Write a function to clean up the text.
     for i in range(1, 16):
-        with open("raw" + str(i) + ".txt", 'r') as f:
+        with open("raw_" + str(i) + ".txt", 'r') as f:
             raw = f.read().replace('\\n', '').replace('\\t', '').replace('\\r', '')
         count += 1
 
         # Extract sentences with NLTK’s sentence tokenizer.
         sent_tokens = nltk.sent_tokenize(raw)
 
-        # Write the sentences for each file to a new file.
-        with open("processed" + str(count) + ".txt", 'w') as f:
+        # Write the processed text sentences from each file to a new file.
+        with open("processed_" + str(count) + ".txt", 'w') as f:
             for t in range(len(sent_tokens)):
                 if '\\' not in sent_tokens[t]:
                     f.write(str(sent_tokens[t].encode("utf-8")) + '\n')
 
     tf_dict = {}  # Dictionary to hold the words found in the URL text files
 
-    # Function to extract at least 25 important terms from the pages using an importance measure such as
-    # term frequency, or tf-idf.
+    # Function to extract 40 important terms from the pages using the importance measure tf-idf.
     for i in range(16, 30):
 
         # Lower-case everything, remove stopwords and punctuation.
-        with open("processed" + str(i) + ".txt", 'r') as f:
+        with open("processed_" + str(i) + ".txt", 'r') as f:
             lower_raw = f.read().lower()
         tokens = word_tokenize(lower_raw)
         tokens = [w for w in tokens if w.isalpha()
@@ -113,7 +121,7 @@ if __name__ == '__main__':
     # Manually determine the top 10 terms based on your domain knowledge.
     dk_10_list = ["home", "buy", "sell", "rates", "marketplace", "new", "insights", "property", "area", "information"]
 
-    # Build a searchable knowledge base of facts that a chatbot can share related to the 10 terms.
+    # Build a searchable knowledge base of facts that a ChatBot can share related to the 10 terms.
     knowledge_base = "Hello, my name is ChatBot.\n" \
                      "A homeowner's net worth is over thirty times greater than that of a renter.\n" \
                      "61.4% of the average American family's net worth is in home equity.\n" \
@@ -146,9 +154,11 @@ if __name__ == '__main__':
                      "According to the U.S. Census Bureau, the average person will move 12 times within their lifetime.\n" \
                      "80% of people aged 65 and older own their own homes.\n" \
                      "The number of people renting homes aged over 59, grew 43% in the last 10 years."
+
+    # Extract the knowledge base sentences with NLTK’s sentence tokenizer.
     kb_sents = sent_tokenize(knowledge_base)
 
-    # Write the knowledge base to a new file
+    # Write the knowledge base sentences to a new file
     with open('KnowledgeBase.txt', 'w') as f:
         for i in range(len(kb_sents)):
             f.write(str(kb_sents[i]) + '\n')
